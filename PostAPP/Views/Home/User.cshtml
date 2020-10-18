@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "User Page";
+}
+<div class="container p-4">
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Group</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+        <script type="text/javascript">
+            const host = window.location.origin;
+            const uri = host + "/api/User";
+
+            $(document).ready(function () {
+                getItems();
+            });
+
+            function getItems() {
+                fetch(uri)
+                    .then(response => response.json())
+                    .then(data => _displayItems(data))
+                    .catch(error => console.error('Unable to get items.', error));
+            }
+            function _displayItems(obj) {
+                console.log(obj);
+                console.log(JSON.parse(obj));
+
+                $('#example').DataTable({
+                    "ajax": JSON.stringify(obj),
+                     "columns": [
+                        { "data": "userName" },
+                        { "data": "userGroup" }
+                    ]
+                });
+            }
+        </script>
+    }
+}
