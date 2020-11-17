@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PostAPP.Data;
 using PostAPP.Models;
 
@@ -20,11 +22,24 @@ namespace PostAPP.Controllers
             _appDB = appDB;
         }
 
-        // GET: api/User
+        ////GET: api/User
+        //[HttpGet]
+        //[Produces("application/json")]
+        //public async Task<ActionResult<IEnumerable<User>>> Get()
+        //{
+        //    return await _appDB.User.ToListAsync();
+        //}
+
+        //GET: api/User
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public ActionResult Get()
         {
-            return await _appDB.User.ToListAsync();
+            var appdata = _appDB.User.ToList();
+            JsonResult result = new JsonResult(new
+            {
+                data = appdata
+            });
+            return result;
         }
 
         // GET: api/User/5

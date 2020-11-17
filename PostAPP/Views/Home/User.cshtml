@@ -19,21 +19,26 @@
             const uri = host + "/api/User";
 
             $(document).ready(function () {
-                getItems();
+                //getItems();
+                _displayItems();
             });
 
-            function getItems() {
-                fetch(uri)
-                    .then(response => response.json())
-                    .then(data => _displayItems(data))
-                    .catch(error => console.error('Unable to get items.', error));
-            }
-            function _displayItems(obj) {
-                console.log(obj);
-                console.log(JSON.parse(obj));
+            //function getItems() {
+            //    fetch(uri)
+            //        .then(response => response.json())
+            //        .then(data => _displayItems(data))
+            //        .catch(error => console.error('Unable to get items.', error));
+            //}
+            function _displayItems() {
+                //console.log(obj);
+                //console.log(JSON.parse(obj));
 
                 $('#example').DataTable({
-                    "ajax": JSON.stringify(obj),
+                    "ajax":{
+                     "url": uri,
+                     "type": "GET",
+                     "dataType": "JSON"
+                     },
                      "columns": [
                         { "data": "userName" },
                         { "data": "userGroup" }
